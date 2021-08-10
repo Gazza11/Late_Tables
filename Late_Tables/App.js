@@ -36,8 +36,6 @@ export default function App() {
     <Item username={item.username }/>
   )
 
-  const a = info.webAddressHome
-
   return (
     <View style={styles.container}>
       <Text style={{color: 'blue'}}

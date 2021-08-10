@@ -8,5 +8,6 @@ public enum CuisineType {
     VIETNAMESE,
     SPANISH,
     LEBANESE,
+    JAPANESE,
     BRITISH;
 }
