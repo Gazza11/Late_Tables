@@ -29,8 +29,15 @@ public class RestaurantTest {
     public void addRes(){
         assertEquals(2, restaurant1.getReservations().size());
         restaurant1.removeReservation(reservation2);
-        reservation3 = new Reservation("22/09/22", "17:00", 4, restaurant1);
-        assertEquals(2, restaurant1.getReservations().size());
 
     }
+
+    @Test
+    public void removeResAndReAdd(){
+        assertEquals(2, restaurant1.getReservations().size());
+        restaurant1.removeReservation(reservation2);
+        reservation3 = new Reservation("22/09/22", "17:00", 4, restaurant1);
+        assertEquals(2, restaurant1.getReservations().size());
+    }
+
 }
