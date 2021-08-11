@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Linking, FlatList, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, Linking, FlatList, SafeAreaView, Image} from 'react-native';
 
 
 export default function App() {
@@ -35,8 +35,6 @@ export default function App() {
   //   <Item username={item.username }/>
   // )
 
-  // const a = info.webAddressHome
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList 
@@ -45,7 +43,13 @@ export default function App() {
         renderItem={({item}) =>
         <View>
           <Text style={styles.items}>{item.name}</Text>
-          {/* <Image source={item.image}></Image> */}
+          <Image 
+            source={{
+              width: 300,
+              height: 100,
+              borderRadius: "10%",
+              uri: item.mainImage}}
+          ></Image>
         </View>
         
         }

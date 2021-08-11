@@ -142,4 +142,12 @@ public class Restaurant {
     public void removeReservation(Reservation reservation){
         this.reservations.remove(reservation);
     }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 }
