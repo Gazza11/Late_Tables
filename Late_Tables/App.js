@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Linking, FlatList} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from "./navigation/tabs"
-import {Home, Alert, User} from "./screens"
+// import {Home, Alert, User} from "./screens"
 import StackUtils from 'stack-utils';
 
 
@@ -58,5 +58,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default App
