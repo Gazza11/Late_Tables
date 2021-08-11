@@ -1,68 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Linking, FlatList} from 'react-native';
+import React from 'react'
 
+import {createStackNavigator} from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
 
-export default function App() {
+import Tabs from './navigation/tabs'
+import {Home, Restaurant, OrderDelivery} from './screens'
 
-  useEffect(() => {
-    getUsers()
-  },[])
+const Stack = createStackNavigator()
 
-  const [info, setInfo] = useState([])
-
-  const getUsers = async () => {
-    try{
-      const response = await fetch('http://localhost:8080/restaurants');
-      const json = await response.json();
-      setInfo(json[0])
-      console.log(info)
-      console.log("test")
-    }
-    catch(error){
-      console.error(error)
-    }
-  }
-
-
-
-  const item = ({username}) => (
-    <View style={styles.item}>
-      <Text style={styles.username}>{username}</Text>
-    </View>
-  )
-
-  const renderItem = ({ item }) => (
-    <Item username={item.username }/>
-  )
-
-  const a = info.webAddressHome
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text style={{color: 'blue'}}
-      onPress={() => Linking.openURL(info.webAddressHome)}>
-      {info.name}
-      </Text>  
-      <Text>
-        {info.name}
-        {info.webAddressHome}
-      </Text>
-      {/* <FlatList
-          info={info}
-          keyExtractor={item  => item.id}
-          renderItem={ renderItem }
-        /> */}
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <Stack.Navigator
+      screenOptions = {{
+        headerShown: false
+      }}
+      initialRouteName={"Home"}
+      >
+        <Stack.Screen name="Home" component={Tabs}/>
+        <Stack.Screen name="Restaurant" component={Restaurant}/>
+        <Stack.Screen name="OrderDelivery" component={OrderDelivery}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
