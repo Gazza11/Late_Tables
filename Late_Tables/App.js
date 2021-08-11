@@ -1,6 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Linking, FlatList} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Tabs from "./navigation/tabs"
+import {Home, Alert, User} from "./screens"
+import StackUtils from 'stack-utils';
 
 
 export default function App() {
@@ -24,8 +29,6 @@ export default function App() {
     }
   }
 
-
-
   const item = ({username}) => (
     <View style={styles.item}>
       <Text style={styles.username}>{username}</Text>
@@ -37,22 +40,13 @@ export default function App() {
   )
 
   return (
-    <View style={styles.container}>
-      <Text style={{color: 'blue'}}
-      onPress={() => Linking.openURL(info.webAddressHome)}>
-      {info.name}
-      </Text>  
-      <Text>
-        {info.name}
-        {info.webAddressHome}
-      </Text>
-      {/* <FlatList
-          info={info}
-          keyExtractor={item  => item.id}
-          renderItem={ renderItem }
-        /> */}
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions = {{headerShown: false}} initialRouteName = {"Home"}>
+        <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Alert" component={Alert}/>
+        <Stack.Screen name="User" component={User}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -64,3 +58,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App
