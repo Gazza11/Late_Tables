@@ -13,7 +13,7 @@ import{
     Linking
 } from "react-native"
 import { sin } from "react-native-reanimated"
-import { icons, images, SIZES, COLORS, FONTS } from "../constants"
+import { icons, SIZES, COLORS, FONTS } from "../constants"
 import Accordion from 'react-native-collapsible/Accordion'
 
 
@@ -49,7 +49,7 @@ const Home = () => {
                 }}
             >
                 <Image
-                    source={icons.nearby}
+                    source={icons.star}
                     resizeMode="contain"
                     style={{
                         width: 30,
