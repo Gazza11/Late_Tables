@@ -12,10 +12,10 @@ import{
     ScrollView,
     Linking
 } from "react-native"
-import { sin } from "react-native-reanimated"
-import { icons, SIZES, COLORS, FONTS } from "../constants"
-import Accordion from 'react-native-collapsible/Accordion'
 
+import { icons, SIZES, COLORS, FONTS } from "../constants"
+
+import Accordion from 'react-native-collapsible/Accordion'
 
 
 const Home = () => {
@@ -98,19 +98,19 @@ const Home = () => {
         return (
             <View style={styles.restaurantItem}>
                 <Image 
-                    source={{
-                    width: "90%",
-                    height: 100,
-                    uri: section.mainImage}}
+                    style={styles.restaurantImage}
+                    source={{uri: section.mainImage}}
                 ></Image>
-                <Text style={styles.items}>{section.name}</Text>
+                <Text style={styles.restaurantName}>{section.name}</Text>
             </View>
+            
             )
         }
         
         renderRestaurantContent = (section) => {
             return (
-            <View>
+            <View style={styles.restaurantCollapsibleInfo}>
+                <Text>{section.desc}</Text>
                 <Text>{section.address}</Text>
                 <Text>{section.telephoneNumber}</Text>
             </View>
@@ -121,7 +121,6 @@ const Home = () => {
             setActiveSections(activeSections)
         }
     
-
         useEffect(() => {
             getRestaurants()
             },[])
@@ -129,8 +128,9 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
             {renderHeader()}
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <ScrollView>
                 <Accordion
+                    touchableProps={{underlayColor: "#fff"}}
                     sections={info}
                     activeSections={activeSections}
                     renderHeader={renderRestaurantHeader}
@@ -143,27 +143,32 @@ const Home = () => {
 }
 
 
-
 const styles = StyleSheet.create({
     container: {
+        alignSelf: "center",
         flex: 1,
         backgroundColor: COLORS.lightGray4,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '90%',
     },
-    shadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-        elevation: 1,
+    restaurantCollapsibleInfo: {
+        flex: 1,
+        
+        alignItems: "center",
+    },
+    restaurantImage: {
+        borderRadius: 10,
+        width: "100%",
+        height: 140,
     },
     restaurantItem: {
         flex: 1,
         alignItems: 'center',
+        paddingTop: 40,
+    },
+    restaurantName: {
+        fontSize: 20,
     }
 })
 
