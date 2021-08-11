@@ -1,21 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Linking, FlatList} from 'react-native';
+import { StyleSheet, Text, View, Linking, FlatList, SafeAreaView} from 'react-native';
 
 
 export default function App() {
 
-  useEffect(() => {
-    getUsers()
-  },[])
-
   const [info, setInfo] = useState([])
 
-  const getUsers = async () => {
+  const getRestaurants = async () => {
     try{
       const response = await fetch('http://localhost:8080/restaurants');
       const json = await response.json();
-      setInfo(json[0])
+      setInfo(json)
       console.log(info)
       console.log("test")
     }
@@ -24,37 +20,39 @@ export default function App() {
     }
   }
 
+  useEffect(() => {
+    getRestaurants()
+  },[])
 
 
-  const item = ({username}) => (
-    <View style={styles.item}>
-      <Text style={styles.username}>{username}</Text>
-    </View>
-  )
+  // const item = ({username}) => (
+  //   <View style={styles.item}>
+  //     <Text style={styles.username}>{username}</Text>
+  //   </View>
+  // )
 
-  const renderItem = ({ item }) => (
-    <Item username={item.username }/>
-  )
+  // const renderItem = ({ item }) => (
+  //   <Item username={item.username }/>
+  // )
 
-  const a = info.webAddressHome
+  // const a = info.webAddressHome
 
   return (
-    <View style={styles.container}>
-      <Text style={{color: 'blue'}}
-      onPress={() => Linking.openURL(info.webAddressHome)}>
-      {info.name}
-      </Text>  
-      <Text>
-        {info.name}
-        {info.webAddressHome}
-      </Text>
-      {/* <FlatList
-          info={info}
-          keyExtractor={item  => item.id}
-          renderItem={ renderItem }
-        /> */}
+    <SafeAreaView style={styles.container}>
+      <FlatList 
+        data={info}
+        keyExtractor={(item) => item.id}
+        renderItem={({item}) =>
+        <View>
+          <Text style={styles.items}>{item.name}</Text>
+          {/* <Image source={item.image}></Image> */}
+        </View>
+        
+        }
+        
+      ></FlatList>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -65,4 +63,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  items: {
+    fontSize: 20
+  }
 });
