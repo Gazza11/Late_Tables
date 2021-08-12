@@ -26,7 +26,7 @@ const Home = () => {
 
     const getRestaurants = async () => {
         try{
-            const response = await fetch('http://localhost:8080/restaurants');
+            const response = await fetch('http://backend-latetables.herokuapp.com/restaurants');
             const json = await response.json();
             setInfo(json)
             console.log(info)
@@ -36,7 +36,7 @@ const Home = () => {
             console.error(error)
         }
     }
-
+//10.245.47.177 my ip
 
     function renderHeader() {
         return (
@@ -112,7 +112,17 @@ const Home = () => {
             <View style={styles.restaurantCollapsibleInfo}>
                 <Text>{section.desc}</Text>
                 <Text>{section.address}</Text>
-                <Text>{section.telephoneNumber}</Text>
+                <View>
+                    <Text style={styles.links}
+                        onPress={() => Linking.openURL(section.webAddressHome)}
+                    >Website</Text>
+                    <Text style={styles.links}
+                        onPress={() => Linking.openURL(section.getWebAddressMenu)}
+                    >Menu</Text>
+                    <Text style={styles.links}
+                        onPress={() => Linking.openURL(`tel:${section.telephoneNumber.replace(/\s/g, "")}`)}
+                    >{section.telephoneNumber}</Text>
+                </View>
             </View>
             )
         }
