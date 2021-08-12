@@ -13,7 +13,7 @@ import{
     Linking
 } from "react-native"
 
-import { icons, SIZES, COLORS, FONTS } from "../constants"
+import { icons, SIZES, COLORS} from "../constants"
 
 import Accordion from 'react-native-collapsible/Accordion'
 
@@ -26,7 +26,7 @@ const Home = () => {
 
     const getRestaurants = async () => {
         try{
-            const response = await fetch('http://localhost:8080/restaurants');
+            const response = await fetch('http://backend-latetables.herokuapp.com/restaurants');
             const json = await response.json();
             setInfo(json)
             console.log(info)
@@ -36,7 +36,6 @@ const Home = () => {
             console.error(error)
         }
     }
-
 
     function renderHeader() {
         return (
@@ -70,7 +69,7 @@ const Home = () => {
                             borderRadius: SIZES.radius
                         }}
                     >
-                        <Text style={{...FONTS.h3 }}>Late Tables</Text>
+                        <Text >Late Tables</Text>
                     </View>
                 </View>
 
@@ -97,11 +96,11 @@ const Home = () => {
     renderRestaurantHeader = (section) => {
         return (
             <View style={styles.restaurantItem}>
-                <Image 
-                    style={styles.restaurantImage}
-                    source={{uri: section.mainImage}}
-                ></Image>
-                <Text style={styles.restaurantName}>{section.name}</Text>
+                    <Image 
+                        style={styles.restaurantImage}
+                        source={{uri: section.mainImage}}
+                    ></Image>
+                    <Text style={styles.restaurantName}>{section.name}</Text>
             </View>
             
             )
@@ -110,9 +109,21 @@ const Home = () => {
         renderRestaurantContent = (section) => {
             return (
             <View style={styles.restaurantCollapsibleInfo}>
-                <Text>{section.desc}</Text>
-                <Text>{section.address}</Text>
-                <Text>{section.telephoneNumber}</Text>
+                <View style={styles.restaurantInfo}>
+                    <Text>{section.desc}</Text>
+                    <Text>{section.address}</Text>
+                    <View style={styles.linkContainer}>
+                        <Text style={styles.links}
+                            onPress={() => Linking.openURL(section.webAddressHome)}
+                        >Website</Text>
+                        <Text style={styles.links}
+                            onPress={() => Linking.openURL(section.getWebAddressMenu)}
+                        >Menu</Text>
+                        <Text style={styles.links}
+                            onPress={() => Linking.openURL(`tel:${section.telephoneNumber.replace(/\s/g, "")}`)}
+                        >{section.telephoneNumber}</Text>
+                    </View>
+                </View>
             </View>
             )
         }
@@ -128,16 +139,15 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
             {renderHeader()}
-            <ScrollView>
                 <Accordion
                     touchableProps={{underlayColor: "#fff"}}
                     sections={info}
+                    renderAsFlatList={true}
                     activeSections={activeSections}
                     renderHeader={renderRestaurantHeader}
                     renderContent={renderRestaurantContent}
                     onChange={updateSections}
                 />
-            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -152,24 +162,48 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '90%',
     },
+    linkContainer: {
+        minHeight: 100,
+        flex: 1,
+        paddingTop: 20,
+        justifyContent: "space-between",
+    },
+    links: {
+        color: COLORS.highlight,
+        textDecorationLine: "underline",
+        fontSize: 16
+    },
     restaurantCollapsibleInfo: {
         flex: 1,
-        
         alignItems: "center",
+    },
+    restaurantHeaderStyle: {
+        borderColor: COLORS.primary,
+        borderWidth: 3
+    },
+    restaurantInfo: {
+        width: '95%',
+        borderColor: COLORS.primary,
+        borderWidth: 3,
+        borderTopWidth: 0,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        padding: 8, 
     },
     restaurantImage: {
         borderRadius: 10,
-        width: "100%",
+        width: "95%",
         height: 140,
     },
     restaurantItem: {
         flex: 1,
         alignItems: 'center',
         paddingTop: 40,
+        
     },
     restaurantName: {
         fontSize: 20,
-    }
+    }  
 })
 
 export default Home
