@@ -104,7 +104,7 @@ const Tabs = () => {
             />
                 <Tab.Screen 
                 name="Like"
-                component={GeoLocation}
+                component={Home}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 

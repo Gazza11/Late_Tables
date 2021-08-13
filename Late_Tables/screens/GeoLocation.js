@@ -27,6 +27,7 @@ export default class GeoLocation extends Component{
     const location = await Location.getCurrentPositionAsync()
 
     this.setState({ location })
+    console.log(location.coords.longitude)
     }
 
     render() {
