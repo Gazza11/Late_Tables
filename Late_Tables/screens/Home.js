@@ -142,7 +142,6 @@ const Home = () => {
                             onPress={() => Linking.openURL(`tel:${section.telephoneNumber.replace(/\s/g, "")}`)}
                         >{section.telephoneNumber}</Text>
                     </View>
-                </View>
             </View>
             )
         }
