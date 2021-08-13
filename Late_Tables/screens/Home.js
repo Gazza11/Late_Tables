@@ -14,13 +14,34 @@ import{
 } from "react-native"
 
 import { icons, SIZES, COLORS} from "../constants"
+// import { GeoLocation } from "."
 
 import Accordion from 'react-native-collapsible/Accordion'
+import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
 
 
 const Home = () => {
 
+    const [location, setLocation] = useState(null)
+    const [locationString, setLocationString] = useState("loading")
 
+    async function getLocationAsync () {
+    
+        const {status} = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND)
+        if (status === 'granted') {
+        
+        let temp = await Location.getCurrentPositionAsync()
+        await setLocationString(JSON.stringify(temp))
+        await setLocation(temp)
+        
+        } else {
+        throw new Error('location permission not granted')
+        }
+        console.log(status)
+        console.log(JSON.stringify(location))
+
+    }
     const [info, setInfo] = useState([])
     const [activeSections, setActiveSections] = useState([])
 
@@ -29,8 +50,6 @@ const Home = () => {
             const response = await fetch('http://backend-latetables.herokuapp.com/restaurants');
             const json = await response.json();
             setInfo(json)
-            console.log(info)
-            console.log("test")
         }
         catch(error){
             console.error(error)
@@ -109,7 +128,6 @@ const Home = () => {
         renderRestaurantContent = (section) => {
             return (
             <View style={styles.restaurantCollapsibleInfo}>
-                <View style={styles.restaurantInfo}>
                     <Text>{section.desc}</Text>
                     <Text>{section.address}</Text>
                     <View style={styles.linkContainer}>
@@ -134,11 +152,13 @@ const Home = () => {
     
         useEffect(() => {
             getRestaurants()
+            getLocationAsync()
             },[])
 
     return (
         <SafeAreaView style={styles.container}>
             {renderHeader()}
+            <Text>{locationString}</Text>
                 <Accordion
                     touchableProps={{underlayColor: "#fff"}}
                     sections={info}
