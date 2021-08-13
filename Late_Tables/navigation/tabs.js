@@ -71,8 +71,9 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 const Tabs = () => {
     return(
         <Tab.Navigator
-            tabBarOptions={{
-                showLabel: false,
+            screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
                 style: {
                     borderTopWidth: 0,
                     backgroundColor: "transparent",

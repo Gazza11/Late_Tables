@@ -17,7 +17,7 @@ import { icons, SIZES, COLORS} from "../constants"
 // import { GeoLocation } from "."
 
 import Accordion from 'react-native-collapsible/Accordion'
-import * as Permissions from 'expo-permissions'
+// import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 
@@ -28,7 +28,7 @@ const Home = () => {
 
     async function getLocationAsync () {
     
-        const {status} = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND)
+        const {status} = await Location.requestForegroundPermissionsAsync()
         if (status === 'granted') {
         
         let temp = await Location.getCurrentPositionAsync()
@@ -39,7 +39,7 @@ const Home = () => {
         throw new Error('location permission not granted')
         }
         console.log(status)
-        console.log(JSON.stringify(location))
+        console.log(JSON.stringify(locationString))
 
     }
     const [info, setInfo] = useState([])
@@ -128,6 +128,7 @@ const Home = () => {
         renderRestaurantContent = (section) => {
             return (
             <View style={styles.restaurantCollapsibleInfo}>
+                <View style={ styles.restaurantInfo }> 
                     <Text>{section.desc}</Text>
                     <Text>{section.address}</Text>
                     <View style={styles.linkContainer}>
@@ -158,10 +159,10 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
             {renderHeader()}
-            <Text>{locationString}</Text>
                 <Accordion
                     touchableProps={{underlayColor: "#fff"}}
                     sections={info}
+                    keyExtractor={(info, index) => index.toString()}
                     renderAsFlatList={true}
                     activeSections={activeSections}
                     renderHeader={renderRestaurantHeader}
@@ -202,6 +203,8 @@ const styles = StyleSheet.create({
         borderWidth: 3
     },
     restaurantInfo: {
+        flex: 1,
+        alignItems: "center",
         width: '95%',
         borderColor: COLORS.primary,
         borderWidth: 3,
