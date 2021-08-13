@@ -5,11 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
 import Tabs from './navigation/tabs'
-import {Home} from './screens'
+import {Home, GeoLocation} from './screens'
+import {Location, Permissions} from 'expo'
+
 
 const Stack = createStackNavigator()
 
-const App = () => {
+const App= () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -25,5 +27,4 @@ const App = () => {
     </NavigationContainer>
   )
 }
-
 export default App
