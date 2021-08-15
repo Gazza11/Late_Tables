@@ -8,14 +8,36 @@ import{
     ColorPropType,
 } from 'react-native'
 import { icons, SIZES, COLORS} from "../constants"
+import { useState, useEffect } from 'react'
 
 const UserPage = () => {
+
+    useEffect (() => {
+        getUser()
+    },[])
+
+    const [user, setUser] = useState([])
+
+const getUser = async () => {
+    try{
+        const response = await fetch('https://backend-latetables.herokuapp.com/users');
+        const json = await response.json();
+        setUser(json)
+    }
+    catch(error){
+        console.error(error)
+    }
+    console.log(user)
+}
+
+
+
     return (
         <SafeAreaView style = {styles.container}>
             <View style = {styles.userPageStyle}>
-                <Text>Account Details</Text>
-                <Text>Username: AlySmith</Text>
-                <Text>Email Address: aly.smith@fanduel.com</Text>
+                <Text>Name: {user[0].name}</Text>
+                <Text>Username: {user[0].username}</Text>
+                <Text>Email Address: {user[0].email}</Text>
             </View>
             {/* <Button
                     onPress={}
