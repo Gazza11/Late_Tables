@@ -37,7 +37,7 @@ const getUser = async () => {
             <View style = {styles.userPageStyle}>
                 <Text>Name: {user[0].name}</Text>
                 <Text>Username: {user[0].username}</Text>
-                <Text>Email Address: {user[0].email}</Text>
+                <Text>Email: {user[0].email}</Text>
             </View>
             {/* <Button
                     onPress={}
