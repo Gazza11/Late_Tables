@@ -12,32 +12,49 @@ import { useState, useEffect } from 'react'
 
 const UserPage = () => {
 
+    const [user, setUser] = useState([])
+
     useEffect (() => {
         getUser()
     },[])
-
-    const [user, setUser] = useState([])
+    console.log(user)
 
 const getUser = async () => {
     try{
         const response = await fetch('https://backend-latetables.herokuapp.com/users');
         const json = await response.json();
-        setUser(json)
+        setUser(json[0])
     }
     catch(error){
         console.error(error)
     }
-    console.log(user)
+    console.log(user)   
 }
 
 
 
     return (
         <SafeAreaView style = {styles.container}>
+            <View style={{ flex: 1, alignItems: 'center'}}>
+                    <View
+                        style={{
+                            width: '50%',
+                            height: '13%',
+                            paddingLeft: 68,
+                            paddingRight: 68,
+                            backgroundColor: COLORS.lightGray3,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: SIZES.radius
+                        }}
+                    >
+                        <Text >Account</Text>
+                    </View>
+                </View>
             <View style = {styles.userPageStyle}>
-                <Text>Name: {user[0].name}</Text>
-                <Text>Username: {user[0].username}</Text>
-                <Text>Email: {user[0].email}</Text>
+                <Text>Name: {user.name}</Text>
+                <Text>Username: {user.username}</Text>
+                <Text>Email: {user.email}</Text>
             </View>
             {/* <Button
                     onPress={}
@@ -63,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: '95%',
         padding: 15,
-        justifyContent: "center",
+        // justifyContent: "center",
     },
 });
 
