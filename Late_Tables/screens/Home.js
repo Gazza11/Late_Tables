@@ -128,9 +128,10 @@ const Home = () => {
         renderRestaurantContent = (section) => {
             return (
             <View style={styles.restaurantCollapsibleInfo}>
-                <View style={ styles.restaurantInfo }> 
-                    <Text>{section.desc}</Text>
-                    <Text>{section.address}</Text>
+                <View style={ styles.restaurantInfo }>
+                    <Text style={styles.restaurantDesc}>{section.desc}</Text>
+                    <Text style={styles.restaurantDesc}>{section.address}</Text>
+
                     <View style={styles.linkContainer}>
                         <Text style={styles.links}
                             onPress={() => Linking.openURL(section.webAddressHome)}
@@ -192,11 +193,18 @@ const styles = StyleSheet.create({
     links: {
         color: COLORS.highlight,
         textDecorationLine: "underline",
-        fontSize: 16
+        fontSize: 16,
+        textAlign: "center"
     },
     restaurantCollapsibleInfo: {
         flex: 1,
         alignItems: "center",
+        textAlign: "center"
+    },
+    restaurantDesc:{
+        paddingRight: 20,
+        paddingLeft: 20,
+        textAlign: "center"
     },
     restaurantHeaderStyle: {
         borderColor: COLORS.primary,
@@ -211,7 +219,8 @@ const styles = StyleSheet.create({
         borderTopWidth: 0,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        padding: 8, 
+        padding: 8,
+
     },
     restaurantImage: {
         borderRadius: 10,
