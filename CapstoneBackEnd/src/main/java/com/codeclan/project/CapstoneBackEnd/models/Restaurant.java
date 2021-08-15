@@ -33,8 +33,6 @@ public class Restaurant {
     @Column(name = "price")
     private Integer price;
 
-//    private GeoLoc location;
-
     @Column(name = "webAddressHome")
     private String webAddressHome;
 
@@ -48,7 +46,15 @@ public class Restaurant {
     @Column(name = "main_image")
     private String mainImage;
 
-    public Restaurant(String name, String address, String telephoneNumber, CuisineType cuisine, String desc, Integer price, String webAddressHome, String getWebAddressMenu, String mainImage) {
+    //    private GeoLoc location;
+
+    @Column(name = "latitude")
+    private String latitude;
+
+    @Column(name = "longitude")
+    private String longitude;
+
+    public Restaurant(String name, String address, String telephoneNumber, CuisineType cuisine, String desc, Integer price, String webAddressHome, String getWebAddressMenu, String mainImage, String latitude, String longitude) {
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;
@@ -59,6 +65,8 @@ public class Restaurant {
         this.getWebAddressMenu = getWebAddressMenu;
         this.reservations = new ArrayList<>();
         this.mainImage = mainImage;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Restaurant(){}
@@ -149,5 +157,33 @@ public class Restaurant {
 
     public void setMainImage(String mainImage) {
         this.mainImage = mainImage;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
