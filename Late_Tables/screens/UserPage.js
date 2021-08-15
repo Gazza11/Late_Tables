@@ -23,7 +23,6 @@ const UserPage = () => {
     useEffect (() => {
         getUser()
     },[])
-    console.log(user)
 
 const getUser = async () => {
     try{
