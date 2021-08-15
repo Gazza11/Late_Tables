@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: '95%',
         padding: 15,
-        maxHeight:"60%",
+        maxHeight:"70%",
         justifyContent: "space-between",
     },
     buttonStyle: {
