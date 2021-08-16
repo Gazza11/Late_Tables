@@ -1,10 +1,10 @@
 import Home from "./Home";
-import GeoLocation from "./GeoLocation";
 import UserPage from "./UserPage";
+import Map from "./Map";
 
 
 export{
     Home,
-    GeoLocation,
     UserPage,
+    Map
 }

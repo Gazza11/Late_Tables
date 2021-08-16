@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import{
     View,
     Text,
@@ -14,10 +14,7 @@ import{
 } from "react-native"
 
 import { icons, SIZES, COLORS} from "../constants"
-// import { GeoLocation } from "."
-
 import Accordion from 'react-native-collapsible/Accordion'
-// import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 

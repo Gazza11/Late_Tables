@@ -5,15 +5,12 @@ import {createStackNavigator} from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
 import Tabs from './navigation/tabs'
-import {Home, GeoLocation} from './screens'
-import {Location, Permissions} from 'expo'
 
 
 
 const Stack = createStackNavigator()
 
 const App= () => {
-
 
   return (
     <NavigationContainer>
