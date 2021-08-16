@@ -10,15 +10,20 @@ import{
     Touchable,
     ColorPropType,
     ScrollView,
-    Linking
+    Linking,
+    Switch
 } from "react-native"
 
 import { icons, SIZES, COLORS} from "../constants"
 import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
+import { Colors } from "react-native/Libraries/NewAppScreen"
 
 
 const Home = () => {
+
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const [location, setLocation] = useState(null)
     const [locationString, setLocationString] = useState("loading")
@@ -47,7 +52,7 @@ const Home = () => {
             const response = await fetch('http://backend-latetables.herokuapp.com/restaurants');
             const json = await response.json();
             setInfo(json)
-            console.log(info[0].reservations)
+            console.log(info[0])
         }
         catch(error){
             console.error(error)
@@ -64,13 +69,13 @@ const Home = () => {
                     justifyContent: 'center'
                 }}
             >
-                <Image
-                    source={icons.star}
-                    resizeMode="contain"
-                    style={{
-                        width: 30,
-                        height: 30
-                    }}
+
+                <Switch
+                    trackColor={{ false: COLORS.secondary, true: "#509051"}}
+                    thumbColor={isEnabled ? COLORS.primary : COLORS.primary}
+                    ios_backgroundColor={COLORS.secondary}
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
                 />
 
                 </TouchableOpacity>
