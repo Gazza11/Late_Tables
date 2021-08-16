@@ -15,6 +15,7 @@ import{
 import { icons, SIZES, COLORS} from "../constants"
 import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
+import DropDownPicker from "react-native-dropdown-picker"
 
 const Home = () => {
 
@@ -38,33 +39,53 @@ const Home = () => {
         }
         console.log(status)
         console.log(JSON.stringify(locationString))
-        console.log(isEnabled)
 
     }
     const [info, setInfo] = useState([])
     const [filteredRestaurants, setFilteredRestaurants] = useState([])
-    const [activeSections, setActiveSections] = useState([])
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState(null)
+    const [items, setItems] = useState([
+        {label: 'See All', value: ""},
+        {label: 'Japanese', value: 'JAPANESE'},
+        {label: 'Italian', value: 'ITALIAN'},
+        {label: 'Lebanese', value: 'LEBANESE'},
+        {label: 'Spanish', value: 'SPANISH'}
+    ])
+    const [activeSections, setActiveSections] = useState("")
 
     const getRestaurants = async () => {
         try{
             const response = await fetch('http://backend-latetables.herokuapp.com/restaurants');
             const json = await response.json();
             setInfo(json)
-            console.log(info[0])
+            setFilteredRestaurants(json)
         }
         catch(error){
             console.error(error)
         }
     }
 
+    function filterRestaurants(cuisine) {
+        if(cuisine){
+            let filteredList = info.filter(rest => rest.cuisine.includes(cuisine))
+            setFilteredRestaurants(filteredList)
+            console.log(value)
+        } else if (cuisine === ""){
+            setFilteredRestaurants(info)
+        }
+        
+    }
+
     function renderHeader() {
         return (
-            <View style={{ flexDirection: 'row', height: 50}}>
+            <View style={{ flexDirection: 'row', height: 50, zIndex:1}}>
                 <TouchableOpacity
                 style={{
                     width: 50,
                     paddingLeft: SIZES.padding * 2,
                     justifyContent: 'center'
+                    
                 }}
             >
 
@@ -79,17 +100,15 @@ const Home = () => {
                 </TouchableOpacity>
 
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <View
-                        style={{
-                            width: '70%',
-                            height: '100%',
-                            backgroundColor: COLORS.lightGray3,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: SIZES.radius
-                        }}
-                    >
-                        <Text>Late Tables</Text>
+                    <View>
+                        <DropDownPicker
+                            open={open}
+                            value={value}
+                            items={items}
+                            setOpen={setOpen}
+                            setValue={setValue}
+                            setItems={setItems}
+                        />
                     </View>
                 </View>
 
@@ -158,12 +177,17 @@ const Home = () => {
             getLocationAsync()
             },[])
 
+            // When search term changes, filteredRestaurants is run with the new value. Updating the list.
+        useEffect(() => {
+            filterRestaurants(value)
+        }, [value])
+
     return (
         <SafeAreaView style={styles.container}>
             {renderHeader()}
                 <Accordion
                     touchableProps={{underlayColor: "#fff"}}
-                    sections={info}
+                    sections={filteredRestaurants}
                     keyExtractor={(info, index) => index.toString()}
                     renderAsFlatList={true}
                     activeSections={activeSections}
@@ -184,6 +208,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '90%',
+        
     },
     linkContainer: {
         minHeight: 100,
