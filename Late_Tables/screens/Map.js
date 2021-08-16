@@ -67,6 +67,7 @@ const Map = () => {
                     coordinate={{latitude: parseFloat(restaurant.latitude), longitude: parseFloat(restaurant.longitude)}}
                     title={restaurant.name}
                     description={restaurant.desc}
+                    key={restaurant.id}
                 />
             ))}
             </MapView>
