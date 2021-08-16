@@ -100,7 +100,7 @@ const Home = () => {
                 </TouchableOpacity>
 
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <View>
+                    <View style={{width: 200}}>
                         <DropDownPicker
                             open={open}
                             value={value}
