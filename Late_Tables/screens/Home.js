@@ -20,6 +20,13 @@ import Accordion from 'react-native-collapsible/Accordion'
 // import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
+import {
+    createDrawerNavigator,
+    DrawerContentScrollView,
+    DrawerItemList,
+    DrawerItem
+} from '@react-navigation/drawer'
+
 
 const Home = () => {
 
@@ -157,9 +164,23 @@ const Home = () => {
             getLocationAsync()
             },[])
 
-    return (
-        <SafeAreaView style={styles.container}>
-            {renderHeader()}
+            const CustomDrawerContent = (props) => (
+                <DrawerContentScrollView>
+                    <DrawerItemList {...props} />
+                    <DrawerItem
+                        label="Close drawer"
+                        onPress={() => props.navigation.closeDrawer()}/>
+                    <DrawerItem
+                        label="Toggle drawer"
+                        onPress={() => props.navigation.toggleDrawer()}/>
+                </DrawerContentScrollView>
+            )
+
+        const Drawer = createDrawerNavigator();
+
+        const Restaurants = () => {
+            return(
+                <SafeAreaView style={styles.container}>
                 <Accordion
                     touchableProps={{underlayColor: "#fff"}}
                     sections={info}
@@ -170,7 +191,17 @@ const Home = () => {
                     renderContent={renderRestaurantContent}
                     onChange={updateSections}
                 />
-        </SafeAreaView>
+                </SafeAreaView>
+            )
+        }
+
+    return (
+        // <SafeAreaView style={styles.container}>
+
+            <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+                <Drawer.Screen name="All" component={Restaurants}/>
+            </Drawer.Navigator>
+
     )
 }
 

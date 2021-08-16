@@ -8,7 +8,7 @@ import {
 import {createBottomTabNavigator, BottomTabBar} from "@react-navigation/bottom-tabs"
 import Svg, {Path} from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
-import {Home, GeoLocation, UserPage} from "../screens"
+import {Home, GeoLocation, UserPage, Restaurant} from "../screens"
 import { COLORS, icons } from '../constants'
 
 const Tab = createBottomTabNavigator()
@@ -105,7 +105,7 @@ const Tabs = () => {
             />
                 <Tab.Screen 
                 name="Like"
-                component={Home}
+                component={Restaurant}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 
