@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
         height: 500,
         width: "80%"
     }
-  });
+});
 
 export default Map
