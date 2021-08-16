@@ -7,8 +7,6 @@ import{
     TouchableOpacity,
     Image,
     FlatList,
-    Touchable,
-    ColorPropType,
     ScrollView,
     Linking,
     Switch
@@ -17,8 +15,6 @@ import{
 import { icons, SIZES, COLORS} from "../constants"
 import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
-import { Colors } from "react-native/Libraries/NewAppScreen"
-
 
 const Home = () => {
 
@@ -42,9 +38,11 @@ const Home = () => {
         }
         console.log(status)
         console.log(JSON.stringify(locationString))
+        console.log(isEnabled)
 
     }
     const [info, setInfo] = useState([])
+    const [filteredRestaurants, setFilteredRestaurants] = useState([])
     const [activeSections, setActiveSections] = useState([])
 
     const getRestaurants = async () => {
@@ -91,7 +89,7 @@ const Home = () => {
                             borderRadius: SIZES.radius
                         }}
                     >
-                        <Text >Late Tables</Text>
+                        <Text>Late Tables</Text>
                     </View>
                 </View>
 
