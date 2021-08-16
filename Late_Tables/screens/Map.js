@@ -8,6 +8,7 @@ import{
 import MapView from 'react-native-maps'
 import Marker from 'react-native-maps'
 import * as Location from 'expo-location'
+import { icons, SIZES, COLORS} from "../constants"
 
 const Map = () => {
 
@@ -68,8 +69,17 @@ const Map = () => {
                     title={restaurant.name}
                     description={restaurant.desc}
                     key={restaurant.id}
+                    isPreselected={false}
                 />
             ))}
+                    <MapView.Marker 
+                    coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}
+                    title="You are Here"
+                    description="LLLLLOOOOOOOOCCCCCCAAAATTTTIIIIIOOOOONNNN"
+                    key="user"
+                    isPreselected={true}
+                    pinColor={COLORS.primary}
+                />
             </MapView>
             : <Text>Loading</Text>
         }
