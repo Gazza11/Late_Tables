@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     restaurantImage: {
         borderRadius: 10,
         width: "95%",
-        height: 140,
+        height: 180,
     },
     restaurantItem: {
         flex: 1,
