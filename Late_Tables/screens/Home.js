@@ -211,6 +211,17 @@ const Home = () => {
                     <Text style={styles.restaurantDesc}>{section.desc}</Text>
                     <Text style={styles.restaurantDesc}>{section.address}</Text>
 
+                    <View style={{flexDirection: 'row'}}>
+                    {[1, 2, 3, 4, 5].map((price) => (
+                        <Text
+                            key={price}
+                            style={{
+                                color: (price <= section.price) ? COLORS.black : COLORS.darkgray
+                            }}
+                        >£</Text>
+                    ))}
+                    </View>
+
                     <View style={styles.linkContainer}>
                         <Text style={styles.links}
                             onPress={() => Linking.openURL(section.webAddressHome)}
