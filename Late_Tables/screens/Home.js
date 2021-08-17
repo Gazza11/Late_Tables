@@ -6,8 +6,6 @@ import{
     StyleSheet,
     TouchableOpacity,
     Image,
-    FlatList,
-    ScrollView,
     StatusBar,
     Linking,
     Switch,
@@ -19,7 +17,6 @@ import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
 import DropDownPicker from "react-native-dropdown-picker"
 import * as Notifications from 'expo-notifications'
-import * as Permissions from 'expo-permissions'
 
 const Home = () => {
 
@@ -216,7 +213,8 @@ const Home = () => {
                         <Text
                             key={price}
                             style={{
-                                color: (price <= section.price) ? COLORS.black : COLORS.darkgray
+                                color: (price <= section.price) ? COLORS.black : COLORS.darkgray,
+                                fontSize: 22
                             }}
                         >£</Text>
                     ))}
@@ -304,7 +302,8 @@ const styles = StyleSheet.create({
     restaurantCollapsibleInfo: {
         flex: 1,
         alignItems: "center",
-        textAlign: "center"
+        textAlign: "center",
+        height: 255
     },
     restaurantDesc:{
         paddingRight: 20,
