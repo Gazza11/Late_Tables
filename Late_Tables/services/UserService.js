@@ -2,12 +2,13 @@
 const UserService = {
 
     async updateAccounts(id, payload) {
-        return fetch('https://backend-latetables.herokuapp.com/users/' + id, {
+        const response = await fetch('https://backend-latetables.herokuapp.com/users/' + id, {
             method: 'PUT',
             body: JSON.stringify(payload),
             headers: {'Content-Type': 'application/json'}
         })
-        await (res => res.json())
+        const data = await response.json()
+        console.log(data)
     }
 }
 

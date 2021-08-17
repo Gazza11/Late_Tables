@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import{
     SafeAreaView,
     Text,
@@ -8,32 +8,50 @@ import{
     Image,
     TextInput
 } from 'react-native'
+
 import { icons, SIZES, COLORS} from "../constants"
-import { useState, useEffect } from 'react'
+import UserService from '../services/UserService'
 
 const UserPage = () => {
 
     const [user, setUser] = useState([])
     const [editMode, setEditMode] = useState(false)
+    const [newName, setNewName] = useState(user.name)
+    const [newUsername, setNewUsername] = useState(user.username)
+    const [newEmail, setNewEmail] = useState(user.email)
 
-    const isPressed = () => {
-        setEditMode(!editMode)
+    const isPressed = async () => {
+        // console.log('hello dave')
+        // console.log({
+        //     "name": newName,
+        //     "username": newUsername,
+        //     "email": newEmail
+        // })
+        if(editMode){
+            await UserService.updateAccounts(user.id,
+                {
+                    "name": newName,
+                    "username": newUsername,
+                    "email": newEmail
+                })
+        }         
+        setEditMode(!editMode)  
     }
 
     useEffect (() => {
         getUser()
     },[])
 
-const getUser = async () => {
-    try{
-        const response = await fetch('https://backend-latetables.herokuapp.com/users');
-        const json = await response.json();
-        setUser(json[0])
+    const getUser = async () => {
+        try{
+            const response = await fetch('https://backend-latetables.herokuapp.com/users');
+            const json = await response.json();
+            setUser(json[0])
+        }
+        catch(error){
+            console.error(error)
+        }
     }
-    catch(error){
-        console.error(error)
-    }
-}
 
 
     return (
@@ -60,19 +78,28 @@ const getUser = async () => {
 
                     <View style={styles.userInformationDetails}>
                         <Text style={{textDecorationLine: 'underline'}}>Name</Text>
-                        {editMode ? <TextInput style={ styles.inputBox} defaultValue={user.name}/> 
+                        {editMode ? <TextInput 
+                                        onChangeText={text => setNewName(text)}
+                                        style={ styles.inputBox} 
+                                        defaultValue={user.name}/> 
                             : <Text style={styles.userInfoField}>{user.name}</Text>}
                     </View>
 
                     <View style={styles.userInformationDetails}>
                         <Text style={{textDecorationLine: 'underline'}}>Username</Text>
-                        {editMode ? <TextInput style={ styles.inputBox} defaultValue={user.username}/> 
+                        {editMode ? <TextInput 
+                                        onChangeText={text => setNewUsername(text)}
+                                        style={ styles.inputBox} 
+                                        defaultValue={user.username}/> 
                             : <Text style={styles.userInfoField}>{user.username}</Text>}     
                     </View>
 
                     <View style={styles.userInformationDetails}>
                         <Text style={{textDecorationLine: 'underline'}}>Email</Text>
-                        {editMode ? <TextInput style={ styles.inputBox} defaultValue={user.email}/> 
+                        {editMode ? <TextInput 
+                                        onChangeText={text => setNewEmail(text)}
+                                        style={ styles.inputBox} 
+                                        defaultValue={user.email}/> 
                             : <Text style={styles.userInfoField}>{user.email}</Text>}
                     </View>
 
