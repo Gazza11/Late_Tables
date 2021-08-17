@@ -38,21 +38,27 @@ const UserPage = () => {
         setEditMode(!editMode)  
     }
 
+    const setNewUserVals = async () => {
+        setNewName(user.name)
+        setNewUsername(user.username)
+        setNewEmail(user.email)
+    }
+
     useEffect (() => {
         getUser()
+        setNewUserVals();
     },[])
 
     const getUser = async () => {
         try{
             const response = await fetch('https://backend-latetables.herokuapp.com/users');
             const json = await response.json();
-            setUser(json[0])
+            await setUser(json[0])
         }
         catch(error){
             console.error(error)
         }
     }
-
 
     return (
         <SafeAreaView style = {styles.container}>
