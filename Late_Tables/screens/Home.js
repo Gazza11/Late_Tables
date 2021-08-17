@@ -8,8 +8,10 @@ import{
     Image,
     FlatList,
     ScrollView,
+    StatusBar,
     Linking,
-    Switch
+    Switch,
+    Platform
 } from "react-native"
 
 import { icons, SIZES, COLORS} from "../constants"
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '90%',
-        
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     linkContainer: {
         minHeight: 100,
