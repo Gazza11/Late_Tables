@@ -42,7 +42,7 @@ const getUser = async () => {
         <SafeAreaView style = {styles.container}>
                     <View
                         style={{
-                            width: '52%',
+                            width: '54%',
                             height: '6%',
                             paddingLeft: 68,
                             paddingRight: 68,
@@ -52,7 +52,7 @@ const getUser = async () => {
                             borderRadius: SIZES.radius
                         }}
                     >
-                        <Text >Account</Text>
+                        <Text>Account</Text>
                     </View>
         <View style={styles.userInformationContainer}>
             <View style = {styles.userPageStyle}>
