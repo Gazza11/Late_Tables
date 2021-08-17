@@ -27,7 +27,7 @@ const Home = () => {
     const [location, setLocation] = useState(null)
     const [locationString, setLocationString] = useState("loading")
 
-    const[reservations, setReservations] = useState()
+    const[reservations, setReservations] = useState([])
 
     async function getLocationAsync () {
     
@@ -71,15 +71,12 @@ const Home = () => {
                 shouldSetBadge: true,
             })
         })
-        console.log('in notification function')
         let notificationId = await Notifications.scheduleNotificationAsync({
             content: {
-            title: 'Title of notification',
-            body: info[0].name
+            title: reservations[0].restaurant.name,
+            body: `Reservation available at ${reservations[0].time}, for ${reservations[0].numberOfGuests} people.`
         },
-            trigger: {
-                seconds: 10
-            }
+            trigger: null
         })
         console.log(notificationId)
     }
@@ -117,6 +114,7 @@ const Home = () => {
             const response = await fetch('http://backend-latetables.herokuapp.com/reservations');
             const json = await response.json();
             setReservations(json)
+            console.log(json)
         }
         catch(error){
             console.error(error)
@@ -234,6 +232,7 @@ const Home = () => {
             askPermissions()
             getRestaurants()
             getLocationAsync()
+            getReservations()
             },[])
 
         // When search term changes, filteredRestaurants is run with the new value. Updating the list.
