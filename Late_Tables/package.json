@@ -14,6 +14,7 @@
     "@react-navigation/stack": "^6.0.4",
     "expo": "~42.0.1",
     "expo-location": "~12.1.2",
+    "expo-notifications": "^0.12.3",
     "expo-permissions": "~12.1.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",

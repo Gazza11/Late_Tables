@@ -8,14 +8,18 @@ import{
     Image,
     FlatList,
     ScrollView,
+    StatusBar,
     Linking,
-    Switch
+    Switch,
+    Platform
 } from "react-native"
 
 import { icons, SIZES, COLORS} from "../constants"
 import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
 import DropDownPicker from "react-native-dropdown-picker"
+import * as Notifications from 'expo-notifications'
+import * as Permissions from 'expo-permissions'
 
 const Home = () => {
 
@@ -25,11 +29,12 @@ const Home = () => {
     const [location, setLocation] = useState(null)
     const [locationString, setLocationString] = useState("loading")
 
+    const[reservations, setReservations] = useState([])
+
     async function getLocationAsync () {
     
         const {status} = await Location.requestForegroundPermissionsAsync()
         if (status === 'granted') {
-        
         let temp = await Location.getCurrentPositionAsync()
         await setLocationString(JSON.stringify(temp))
         await setLocation(temp)
@@ -41,6 +46,45 @@ const Home = () => {
         console.log(JSON.stringify(locationString))
 
     }
+
+    // Notifications Code
+
+
+
+    askPermissions = async () => {
+        console.log("Inside permission")
+        const { status: existingStatus} = await Notifications.requestPermissionsAsync
+        let finalStatus = existingStatus
+        if (existingStatus !== "granted") {
+            const { status } = await Notifications.requestPermissionsAsync
+            finalStatus = status
+        }
+        if (finalStatus !== "granted"){
+            return false
+        }
+        return true
+    }
+
+    sendNotificationImmediately = async () => {
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+                shouldShowAlert: true,
+                shouldPlaySound: true,
+                shouldSetBadge: true,
+            })
+        })
+        let notificationId = await Notifications.scheduleNotificationAsync({
+            content: {
+            title: reservations[0].restaurant.name,
+            body: `Reservation available at ${reservations[0].time}, for ${reservations[0].numberOfGuests} people. Call now ${reservations[0].restaurant.telephoneNumber}` 
+            
+        },
+            trigger: null
+        })
+        console.log(notificationId)
+    }
+
+    // Set up for restaurant states and filtering states.
     const [info, setInfo] = useState([])
     const [filteredRestaurants, setFilteredRestaurants] = useState([])
     const [open, setOpen] = useState(false)
@@ -62,6 +106,18 @@ const Home = () => {
             const json = await response.json();
             setInfo(json)
             setFilteredRestaurants(json)
+        }
+        catch(error){
+            console.error(error)
+        }
+    }
+
+    const getReservations = async () => {
+        try{
+            const response = await fetch('http://backend-latetables.herokuapp.com/reservations');
+            const json = await response.json();
+            setReservations(json)
+            console.log(json)
         }
         catch(error){
             console.error(error)
@@ -176,14 +232,23 @@ const Home = () => {
         }
     
         useEffect(() => {
+            askPermissions()
             getRestaurants()
             getLocationAsync()
+            getReservations()
             },[])
 
         // When search term changes, filteredRestaurants is run with the new value. Updating the list.
         useEffect(() => {
             filterRestaurants(value)
         }, [value])
+
+        // Use effect for checking notification and whether it should be sent
+        useEffect(() => {
+            if(isEnabled){
+                sendNotificationImmediately()
+            }
+        }, [isEnabled])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -211,7 +276,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '90%',
-        
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     linkContainer: {
         minHeight: 100,
