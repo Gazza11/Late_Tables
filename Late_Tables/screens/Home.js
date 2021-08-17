@@ -123,7 +123,7 @@ const Home = () => {
                     }}
                 >
                     <Image
-                        source={icons.basket}
+                        source={icons.star}
                         resizeMode='contain'
                         style={{
                             width: 30,
