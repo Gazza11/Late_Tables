@@ -3,7 +3,8 @@ import{
     View,
     Text,
     StyleSheet,
-    SafeAreaView
+    SafeAreaView,
+    ActivityIndicator
 } from 'react-native'
 import MapView from 'react-native-maps'
 import Marker from 'react-native-maps'
@@ -81,7 +82,7 @@ const Map = () => {
                     pinColor={COLORS.primary}
                 />
             </MapView>
-            : <Text>Loading</Text>
+            : <ActivityIndicator size="large" color={COLORS.secondary}/>
         }
         </SafeAreaView>
     )
@@ -95,8 +96,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     map: {
-        height: 500,
-        width: "80%"
+        height: '100%',
+        width: "100%"
     }
 });
 

@@ -64,7 +64,7 @@ const UserPage = () => {
         <SafeAreaView style = {styles.container}>
             <View
                 style={{
-                    width: '52%',
+                    width: '54%',
                     height: '6%',
                     paddingLeft: 68,
                     paddingRight: 68,
