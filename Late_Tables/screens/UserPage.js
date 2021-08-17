@@ -21,12 +21,7 @@ const UserPage = () => {
     const [newEmail, setNewEmail] = useState(user.email)
 
     const isPressed = async () => {
-        // console.log('hello dave')
-        // console.log({
-        //     "name": newName,
-        //     "username": newUsername,
-        //     "email": newEmail
-        // })
+
         if(editMode){
             await UserService.updateAccounts(user.id,
                 {
@@ -34,19 +29,20 @@ const UserPage = () => {
                     "username": newUsername,
                     "email": newEmail
                 })
-        }         
-        setEditMode(!editMode)  
-    }
+        }      
 
-    const setNewUserVals = async () => {
-        setNewName(user.name)
-        setNewUsername(user.username)
-        setNewEmail(user.email)
+        setUser({
+        "name": newName,
+        "id" : user.id,
+        "username": newUsername,
+        "email": newEmail
+        }) 
+
+        setEditMode(!editMode)  
     }
 
     useEffect (() => {
         getUser()
-        setNewUserVals();
     },[])
 
     const getUser = async () => {
@@ -58,7 +54,14 @@ const UserPage = () => {
         catch(error){
             console.error(error)
         }
+        finally{
+            setNewName(user.name)
+            setNewUsername(user.username)
+            setNewEmail(user.email)
+        }
     }
+
+    
 
     return (
         <SafeAreaView style = {styles.container}>
@@ -86,7 +89,7 @@ const UserPage = () => {
                         <Text style={{textDecorationLine: 'underline'}}>Name</Text>
                         {editMode ? <TextInput 
                                         onChangeText={text => setNewName(text)}
-                                        style={ styles.inputBox} 
+                                        style={styles.inputBox} 
                                         defaultValue={user.name}/> 
                             : <Text style={styles.userInfoField}>{user.name}</Text>}
                     </View>
@@ -94,9 +97,10 @@ const UserPage = () => {
                     <View style={styles.userInformationDetails}>
                         <Text style={{textDecorationLine: 'underline'}}>Username</Text>
                         {editMode ? <TextInput 
-                                        onChangeText={text => setNewUsername(text)}
+                                        onChangeText={(text) => setNewUsername(text)}
                                         style={ styles.inputBox} 
                                         defaultValue={user.username}/> 
+                                        
                             : <Text style={styles.userInfoField}>{user.username}</Text>}     
                     </View>
 
