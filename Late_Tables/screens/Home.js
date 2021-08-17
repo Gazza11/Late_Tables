@@ -51,10 +51,10 @@ const Home = () => {
 
     askPermissions = async () => {
         console.log("Inside permission")
-        const { status: existingStatus} = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+        const { status: existingStatus} = await Notifications.requestPermissionsAsync
         let finalStatus = existingStatus
         if (existingStatus !== "granted") {
-            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+            const { status } = await Notifications.requestPermissionsAsync
             finalStatus = status
         }
         if (finalStatus !== "granted"){
@@ -74,7 +74,8 @@ const Home = () => {
         let notificationId = await Notifications.scheduleNotificationAsync({
             content: {
             title: reservations[0].restaurant.name,
-            body: `Reservation available at ${reservations[0].time}, for ${reservations[0].numberOfGuests} people.`
+            body: `Reservation available at ${reservations[0].time}, for ${reservations[0].numberOfGuests} people. Call now ${reservations[0].restaurant.telephoneNumber}` 
+            
         },
             trigger: null
         })
