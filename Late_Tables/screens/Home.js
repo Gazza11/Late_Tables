@@ -50,7 +50,9 @@ const Home = () => {
         {label: 'Japanese', value: 'JAPANESE'},
         {label: 'Italian', value: 'ITALIAN'},
         {label: 'Lebanese', value: 'LEBANESE'},
-        {label: 'Spanish', value: 'SPANISH'}
+        {label: 'Spanish', value: 'SPANISH'},
+        {label: 'Mexican', value: 'MEXICAN'},
+        {label: 'British', value: 'BRITISH'}
     ])
     const [activeSections, setActiveSections] = useState("")
 
@@ -108,6 +110,7 @@ const Home = () => {
                             setOpen={setOpen}
                             setValue={setValue}
                             setItems={setItems}
+                            dropDownMaxHeight={200}
                         />
                     </View>
                 </View>
@@ -177,7 +180,7 @@ const Home = () => {
             getLocationAsync()
             },[])
 
-            // When search term changes, filteredRestaurants is run with the new value. Updating the list.
+        // When search term changes, filteredRestaurants is run with the new value. Updating the list.
         useEffect(() => {
             filterRestaurants(value)
         }, [value])
