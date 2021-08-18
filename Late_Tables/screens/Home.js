@@ -117,7 +117,6 @@ const Home = () => {
             const response = await fetch('http://backend-latetables.herokuapp.com/reservations');
             const json = await response.json();
             setReservations(json)
-            console.log(json)
         }
         catch(error){
             console.error(error)
