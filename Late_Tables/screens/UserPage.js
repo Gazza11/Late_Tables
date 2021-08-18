@@ -41,16 +41,7 @@ const getUser = async () => {
     return (
         <SafeAreaView style = {styles.container}>
                     <View
-                        style={{
-                            width: '54%',
-                            height: '6%',
-                            paddingLeft: 68,
-                            paddingRight: 68,
-                            backgroundColor: COLORS.lightGray3,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: SIZES.radius
-                        }}
+                        style={styles.accountHeader}
                     >
                         <Text>Account</Text>
                     </View>
@@ -91,6 +82,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center',
         width: '90%',
+    },
+    accountHeader: {
+        flex: 1,
+        width: '52%',
+        maxHeight: '6%',
+        // paddingLeft: 68,
+        // paddingRight: 68,
+        backgroundColor: COLORS.lightGray3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: SIZES.radius
     },
     userInformationDetails:{
         alignItems: "center"

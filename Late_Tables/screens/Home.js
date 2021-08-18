@@ -158,7 +158,7 @@ const Home = () => {
                 </TouchableOpacity>
 
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <View style={{width: 200}}>
+                    <View style={{width: "75%"}}>
                         <DropDownPicker
                             open={open}
                             value={value}
@@ -210,7 +210,17 @@ const Home = () => {
                 <View style={ styles.restaurantInfo }>
                     <Text style={styles.restaurantDesc}>{section.desc}</Text>
                     <Text style={styles.restaurantDesc}>{section.address}</Text>
-
+                    <View style={{flexDirection: 'row'}}>
+                    {[1, 2, 3, 4, 5].map((price) => (
+                        <Text
+                            key={price}
+                            style={{
+                                color: (price <= section.price) ? COLORS.black : COLORS.darkgray,
+                                fontSize: 22
+                            }}
+                        >£</Text>
+                    ))}
+                    </View>
                     <View style={styles.linkContainer}>
                         <Text style={styles.links}
                             onPress={() => Linking.openURL(section.webAddressHome)}
@@ -293,7 +303,8 @@ const styles = StyleSheet.create({
     restaurantCollapsibleInfo: {
         flex: 1,
         alignItems: "center",
-        textAlign: "center"
+        textAlign: "center",
+        height: 257
     },
     restaurantDesc:{
         paddingRight: 20,
