@@ -79,8 +79,17 @@ const Home = () => {
             body: `Reservation available at ${reservations[0].time}, for ${reservations[0].numberOfGuests} people. Call now ${reservations[0].restaurant.telephoneNumber}` 
             
         },
+        
             trigger: null
         })
+        let notificationId2 = await Notifications.scheduleNotificationAsync({
+            content: {
+            title: reservations[1].restaurant.name,
+            body: `Reservation available at ${reservations[1].time}, for ${reservations[1].numberOfGuests} people. Call now ${reservations[1].restaurant.telephoneNumber}` 
+        },
+            trigger: {seconds: 20}
+        })
+
         console.log(notificationId)
     }
 
