@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import{
     SafeAreaView,
     Text,
@@ -6,35 +6,63 @@ import{
     View,
     Button,
     ColorPropType,
-    Image
+    Image,
+    TextInput
 } from 'react-native'
 import { icons, SIZES, COLORS} from "../constants"
-import { useState, useEffect } from 'react'
+import UserService from '../Services/userService'
 
 const UserPage = () => {
 
     const [user, setUser] = useState([])
-    const [pressed, setPressed] = useState(false)
+    const [editMode, setEditMode] = useState(false)
+    const [newName, setNewName] = useState(user.name)
+    const [newUsername, setNewUsername] = useState(user.username)
+    const [newEmail, setNewEmail] = useState(user.email)
 
-    const isPressed = () => {
-        setPressed(!pressed)
+    const isPressed = async () => {
+
+        if(editMode){
+            await UserService.updateAccounts(user.id,
+                {
+                    "name": newName,
+                    "username": newUsername,
+                    "email": newEmail
+                })
+        }      
+
+        setUser({
+        "name": newName,
+        "id" : user.id,
+        "username": newUsername,
+        "email": newEmail
+        }) 
+
+        setEditMode(!editMode)  
     }
 
     useEffect (() => {
         getUser()
     },[])
 
-const getUser = async () => {
-    try{
-        const response = await fetch('https://backend-latetables.herokuapp.com/users');
-        const json = await response.json();
-        setUser(json[0])
+    useEffect (() => {
+        if(!editMode){
+            setNewName(user.name)
+            setNewUsername(user.username)
+            setNewEmail(user.email)
+        }
+    }, [isPressed])
+
+    const getUser = async () => {
+        try{
+            const response = await fetch('https://backend-latetables.herokuapp.com/users');
+            const json = await response.json();
+            setUser(json[0])
     }
-    catch(error){
-        console.error(error)
+        catch(error){
+            console.error(error)
     }
-    console.log(user)   
-}
+    }
 
 
 
@@ -52,19 +80,32 @@ const getUser = async () => {
                 ></Image>
                 <View style={styles.userInformationDetails}>
                     <Text style={{textDecorationLine: 'underline'}}>Name</Text>
-                    <Text style={{fontSize: 30}}>{user.name}</Text>
+                    {editMode ? <TextInput 
+                                        onChangeText={text => setNewName(text)}
+                                        style={styles.inputBox} 
+                                        defaultValue={user.name}/> 
+                            : <Text style={styles.userInfoField}>{user.name}</Text>}
                 </View>
                 <View style={styles.userInformationDetails}>
                     <Text style={{textDecorationLine: 'underline'}}>Username</Text>
-                    <Text style={{fontSize: 30}}>{user.username}</Text>
+                    {editMode ? <TextInput 
+                                        onChangeText={(text) => setNewUsername(text)}
+                                        style={ styles.inputBox} 
+                                        defaultValue={user.username}/> 
+                                        
+                            : <Text style={styles.userInfoField}>{user.username}</Text>}
                 </View>
                 <View style={styles.userInformationDetails}>
                     <Text style={{textDecorationLine: 'underline'}}>Email</Text>
-                    <Text style={{fontSize: 30}}>{user.email}</Text>
+                    {editMode ? <TextInput 
+                                        onChangeText={text => setNewEmail(text)}
+                                        style={ styles.inputBox} 
+                                        defaultValue={user.email}/> 
+                            : <Text style={styles.userInfoField}>{user.email}</Text>}
                 </View>
                 <Button style = {styles.buttonStyle}
                     onPress={isPressed}
-                    title="Edit"
+                    title={editMode ? "Done" : "Edit"}
                     color= {COLORS.primary}
                     accessibilityLabel="Edit information"
                 />
@@ -80,15 +121,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.lightGray4,
         alignItems: 'center',
-        // justifyContent: 'center',
         width: '90%',
     },
     accountHeader: {
         flex: 1,
         width: '52%',
         maxHeight: '6%',
-        // paddingLeft: 68,
-        // paddingRight: 68,
         backgroundColor: COLORS.lightGray3,
         alignItems: 'center',
         justifyContent: 'center',
@@ -111,12 +149,23 @@ const styles = StyleSheet.create({
         maxHeight:"70%",
         justifyContent: "space-between",
     },
+    userInfoField: {
+        fontSize: 25,
+    },
     buttonStyle: {
         borderRadius:10,
         borderStyle: 'solid',
         borderColor: COLORS.secondary,
         fontSize: 50
-    }
+    },
+    inputBox:{
+        fontSize: 25,
+        borderColor: COLORS.primary,
+        borderWidth: 3,
+        padding: 5,
+        borderRadius: 10
+    },
 });
 
 export default UserPage
+
