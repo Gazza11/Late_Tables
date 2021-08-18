@@ -6,8 +6,6 @@ import{
     StyleSheet,
     TouchableOpacity,
     Image,
-    FlatList,
-    ScrollView,
     StatusBar,
     Linking,
     Switch,
@@ -19,7 +17,6 @@ import Accordion from 'react-native-collapsible/Accordion'
 import * as Location from 'expo-location'
 import DropDownPicker from "react-native-dropdown-picker"
 import * as Notifications from 'expo-notifications'
-import * as Permissions from 'expo-permissions'
 
 const Home = () => {
 
@@ -53,10 +50,10 @@ const Home = () => {
 
     askPermissions = async () => {
         console.log("Inside permission")
-        const { status: existingStatus} = await Notifications.requestPermissionsAsync
+        const { status: existingStatus} = await Notifications.requestPermissionsAsync()
         let finalStatus = existingStatus
         if (existingStatus !== "granted") {
-            const { status } = await Notifications.requestPermissionsAsync
+            const { status } = await Notifications.requestPermissionsAsync()
             finalStatus = status
         }
         if (finalStatus !== "granted"){

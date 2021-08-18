@@ -1,15 +1,12 @@
 import React, {useContext, useState, useEffect} from 'react'
 import{
-    View,
-    Text,
     StyleSheet,
     SafeAreaView,
     ActivityIndicator
 } from 'react-native'
 import MapView from 'react-native-maps'
-import Marker from 'react-native-maps'
 import * as Location from 'expo-location'
-import { icons, SIZES, COLORS} from "../constants"
+import { COLORS} from "../constants"
 
 const Map = () => {
 
@@ -76,7 +73,7 @@ const Map = () => {
                     <MapView.Marker 
                     coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}
                     title="You are Here"
-                    description="LLLLLOOOOOOOOCCCCCCAAAATTTTIIIIIOOOOONNNN"
+                    description="This is your location"
                     key="user"
                     isPreselected={true}
                     pinColor={COLORS.primary}

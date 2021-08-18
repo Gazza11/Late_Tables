@@ -5,11 +5,11 @@ import{
     StyleSheet,
     View,
     Button,
-    ColorPropType,
     Image,
-    TextInput
+    TextInput,
+    StatusBar
 } from 'react-native'
-import { icons, SIZES, COLORS} from "../constants"
+import { SIZES, COLORS} from "../constants"
 import UserService from '../Services/userService'
 
 const UserPage = () => {
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.lightGray4,
         alignItems: 'center',
         width: '90%',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     accountHeader: {
         flex: 1,
