@@ -55,5 +55,6 @@ User preferences should be tracked and the application should understand their l
 
 Below is a demo video we recorded for our presentation showing some of the features of the app
 
+	![Demo video of Late Tables](LateTablesDemoVideo.jpg)
 
 
