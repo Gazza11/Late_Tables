@@ -46,8 +46,6 @@ const Home = () => {
 
     // Notifications Code
 
-
-
     askPermissions = async () => {
         console.log("Inside permission")
         const { status: existingStatus} = await Notifications.requestPermissionsAsync()
@@ -78,13 +76,6 @@ const Home = () => {
         },
         
             trigger: null
-        })
-        let notificationId2 = await Notifications.scheduleNotificationAsync({
-            content: {
-            title: reservations[1].restaurant.name,
-            body: `Reservation available at ${reservations[1].time}, for ${reservations[1].numberOfGuests} people. Call now ${reservations[1].restaurant.telephoneNumber}` 
-        },
-            trigger: {seconds: 20}
         })
 
         console.log(notificationId)
