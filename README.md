@@ -41,7 +41,7 @@ User preferences should be tracked and the application should understand their l
 #### To run on computer 
 - Run preferred simulator <sup>[1](#footnote1)</sup> using the buttons on the left hand side of the expo browser page
 
-	![the location of the simulator buttons on the expo browser page](SimulatorButtonsImage.jpg)
+![the location of the simulator buttons on the expo browser page](SimulatorButtonsImage.jpg)
 
 #### To run on mobile
 - Download Expo Go from the relevant app store for your device
@@ -55,6 +55,6 @@ User preferences should be tracked and the application should understand their l
 
 Below is a demo video we recorded for our presentation showing some of the features of the app
 
-	![Demo video of Late Tables](LateTablesDemoVideo.jpg)
+![Demo video of Late Tables](LateTablesDemoVideo.jpg)
 
 
